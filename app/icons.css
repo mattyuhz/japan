@@ -15,3 +15,4 @@ nav .material-symbol{color:var(--muted);font-size:16px}
 .neighborhood-group h3>.material-symbol{font-size:20px;color:var(--muted)}
 .nearby-card>div .action-link{min-height:44px}
 @media(max-width:700px){.place-row h3>.place-title-text{grid-column:auto;grid-row:auto;white-space:normal}.place-row>.material-symbol{grid-column:3;grid-row:1}.place-row h3>.material-symbol{grid-column:auto;grid-row:auto}}
+.map-credits{font:400 11px/1.6 system-ui,sans-serif;color:#aaa;margin:10px 0}.map-credits a{color:inherit;text-underline-offset:3px}.map-option>.map-credits{padding:0 16px}.map-frame{filter:grayscale(1)}.map-frame .neighborhood-marker{background:#d8d8d8;color:#252525;border-color:#aaa;box-shadow:none}.map-frame .neighborhood-marker[data-selected=true]{background:#f4f4f4;outline-color:#ffffff66}

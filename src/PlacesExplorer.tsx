@@ -3,6 +3,7 @@ import type { Map as VectorMap } from "maplibre-gl";
 import mapWorkerUrl from "maplibre-gl/dist/maplibre-gl-csp-worker.js?url";
 import neighborhoods from "./data/neighborhoods.json";
 import MaterialSymbol from "./MaterialSymbol";
+import MapCredits from "./MapCredits";
 import { categoryIcon } from "./categoryIcon";
 
 export type SavedPlace = { title:string; url:string; area:string; neighborhood:string; lat:number; lng:number; categories:string[] };
@@ -30,21 +31,11 @@ function MapView({places,selected,area,onSelect}:{places:SavedPlace[];selected:s
     import("maplibre-gl").then(L=>{
       if(!active||!node.current) return;
       L.setWorkerUrl(mapWorkerUrl);
-      instance=new L.Map({container:node.current,style:"https://tiles.openfreemap.org/styles/dark",center:[139.73,35.68],zoom:11.5,attributionControl:{compact:true},canvasContextAttributes:{preserveDrawingBuffer:true}});
+      instance=new L.Map({container:node.current,style:import.meta.env.BASE_URL+"map-options/charcoal.json",center:[139.73,35.68],zoom:11.5,attributionControl:false,cooperativeGestures:true,canvasContextAttributes:{preserveDrawingBuffer:true}});
       const map=instance;
-      map.addControl(new L.NavigationControl({showCompass:false}),"top-right");
-      map.addControl(new L.ScaleControl({maxWidth:100,unit:"metric"}),"bottom-left");
-      map.scrollZoom.disable();
       const updateDetail=()=>{if(node.current) node.current.dataset.detail=String(map.getZoom()>=13)};
       map.on("zoom",updateDetail);
       map.on("load",()=>{
-        for(const layer of map.getStyle().layers){
-          if(layer.type==="background") map.setPaintProperty(layer.id,"background-color","#171817");
-          if(layer.type==="symbol"&&layer.layout?.["text-field"]){
-            map.setPaintProperty(layer.id,"text-color","#c8c5bb");
-            map.setPaintProperty(layer.id,"text-halo-color","#171817");
-          }
-        }
         updateDetail();
       });
       setReady({map,lib:L});
@@ -80,10 +71,10 @@ function MapView({places,selected,area,onSelect}:{places:SavedPlace[];selected:s
     if(!bounds.isEmpty()) ready.map.fitBounds(bounds,{padding:65,maxZoom:13,duration:600});
     else ready.map.flyTo({center:[138.25,36.2],zoom:5,duration:600});
   },[ready,selected,area]);
-  return <div className="map-container"><p className="map-note">SELECT A MARKER TO ZOOM IN · DRAG TO EXPLORE · USE + / − TO ZOOM</p>
+  return <div className="map-container"><p className="map-note">SELECT A NEIGHBORHOOD · DRAG TO EXPLORE · ⌘ + SCROLL TO ZOOM (CTRL ON WINDOWS)</p>
     {failed&&<p role="alert">The map could not start. You can still browse every neighborhood below.</p>}
     <div className="map-frame" ref={node} aria-label="Interactive neighborhood map" />
-    <p className="location-note">Markers show neighborhood centers, not exact venue locations. Neighborhoods are inferred from place names; check the venue’s Maps link before heading out.</p>
+    <MapCredits/><p className="location-note">Markers show neighborhood centers, not exact venue locations. Neighborhoods are inferred from place names; check the venue’s Maps link before heading out.</p>
   </div>;
 }
 

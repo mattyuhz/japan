@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import maplibregl, { type Map as VectorMap } from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-csp-worker.js?url";
 import MaterialSymbol from "./MaterialSymbol";
+import MapCredits from "./MapCredits";
 import neighborhoods from "./data/neighborhoods.json";
 import places from "./data/japan-places.json";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -32,10 +33,7 @@ function MapOption({option,onReady,onMove,onPick}:{option:typeof allOptions[numb
   const [error,setError]=useState(false);
   useEffect(()=>{
     if(!node.current)return;
-    const map=new maplibregl.Map({container:node.current,style:import.meta.env.BASE_URL+"map-options/"+option.id+".json",center:[139.763,35.693],zoom:13.5,attributionControl:{compact:true},canvasContextAttributes:{preserveDrawingBuffer:true}});
-    map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
-    map.addControl(new maplibregl.ScaleControl({unit:"metric",maxWidth:90}),"bottom-left");
-    map.scrollZoom.disable();
+    const map=new maplibregl.Map({container:node.current,style:import.meta.env.BASE_URL+"map-options/"+option.id+".json",center:[139.763,35.693],zoom:13.5,attributionControl:false,cooperativeGestures:true,canvasContextAttributes:{preserveDrawingBuffer:true}});
     map.on("load",()=>setLoaded(true));
     map.on("error",()=>setError(true));
     map.on("move",()=>onMove(option.id));
@@ -51,7 +49,7 @@ function MapOption({option,onReady,onMove,onPick}:{option:typeof allOptions[numb
     onReady(option.id,map);
     return()=>{resize.disconnect();onReady(option.id,null);map.remove()};
   },[option,onReady,onMove,onPick]);
-  return <><div ref={node} className="option-map" aria-label={`${option.letter}: ${option.name} interactive map`}/>{!loaded&&<p className="load-note" role="status">{error?"Map could not load. Check your connection and reload.":"Loading vector map…"}</p>}</>;
+  return <><div ref={node} className="option-map" aria-label={`${option.letter}: ${option.name} interactive map`}/><MapCredits/>{!loaded&&<p className="load-note" role="status">{error?"Map could not load. Check your connection and reload.":"Loading vector map…"}</p>}</>;
 }
 
 function MapOptions(){
@@ -75,14 +73,14 @@ function MapOptions(){
   return <main className={`map-options-page ${collection}`}><header className="options-heading"><div><p className="eyebrow">JAPAN / MAP STUDIES</p><h1>{collection==="monochrome"?"Three shades of dark.":"Three ways to see the city."}</h1><p>{collection==="monochrome"?"Pure grayscale. Different contrast, texture, and detail.":"Same neighborhoods. Same zoom. Different map character."}</p></div><a className="back-link" href={import.meta.env.BASE_URL+"#places"}>Back to your guide ↗</a></header>
     <div className="collection-switch" role="group" aria-label="Map collection">{["monochrome","original"].map(group=><button key={group} aria-pressed={collection===group} onClick={()=>{setCollection(group);setFocus("all")}}>{group==="monochrome"?"D–F / Dark monochrome":"A–C / Earlier options"}</button>)}</div>
     <div className="comparison-toolbar"><div className="comparison-tabs" role="group" aria-label="Compare or enlarge map options"><button aria-pressed={focus==="all"} onClick={()=>setFocus("all")}>Compare all</button>{options.map(o=><button key={o.id} aria-pressed={focus===o.id} onClick={()=>setFocus(o.id)}>{o.letter} / {o.name}</button>)}</div><label>NEIGHBORHOOD<select value={area} onChange={e=>onPick(e.target.value)}>{anchors.map(n=><option key={n.name}>{n.name}</option>)}</select></label></div>
-    <p className="comparison-hint"><MaterialSymbol name="directions_walk"/>Drag or zoom any map—all three stay in sync. Click a neighborhood marker to center it.</p>
+    <p className="comparison-hint"><MaterialSymbol name="directions_walk"/>⌘ + scroll to zoom (Ctrl on Windows). Drag to pan—all three stay in sync.</p>
     <div className={`options-grid ${focus!=="all"?"focused":""}`}>{options.map(o=><section className={`map-option ${o.id}`} key={o.id} hidden={focus!=="all"&&focus!==o.id}>
       <header><span className="option-letter">{o.letter}</span><div><p>{o.tag}</p><h2>{o.name}</h2></div></header>
       <MapOption option={o} onReady={onReady} onMove={onMove} onPick={onPick}/>
       <div className="option-copy"><p>{o.description}</p><p className="tradeoff">{o.tradeoff}</p><button className="choose-option" aria-pressed={choice===o.id} onClick={()=>setChoice(o.id)}><MaterialSymbol name={choice===o.id?"check_circle":"map"}/>{choice===o.id?`Selected ${o.letter}`:`I prefer ${o.letter}`}</button></div>
     </section>)}</div>
     <div className="choice-summary" aria-live="polite">{choice?`Your preview choice: ${allOptions.find(o=>o.id===choice)!.letter} — ${allOptions.find(o=>o.id===choice)!.name}. Tell me your choice in the chat and I’ll apply it.`:`Choose ${options.map(o=>o.letter).join(", ")}—or tell me which parts you’d like combined.`}</div>
-    <footer><p>Comparison only. Your live guide’s map is unchanged. Selection here is not saved or published.</p><p>Markers are neighborhood centers, not exact venue pins. All three use vector maps. <a href="https://openfreemap.org/quick_start/">Basemaps: OpenFreeMap / OpenStreetMap</a>.</p></footer>
+    <footer><p>The live guide uses D / Soft charcoal. Other choices here are previews only; selection is not saved or published.</p><p>Markers are neighborhood centers, not exact venue pins. All three use vector maps. <a href="https://openfreemap.org/quick_start/">Basemaps: OpenFreeMap / OpenStreetMap</a>.</p></footer>
   </main>;
 }
 createRoot(document.getElementById("root")!).render(<React.StrictMode><MapOptions/></React.StrictMode>);
