@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Map as LeafletMap } from "leaflet";
+import type { Map as VectorMap } from "maplibre-gl";
+import mapWorkerUrl from "maplibre-gl/dist/maplibre-gl-csp-worker.js?url";
 
 export type SavedPlace = { title:string; url:string; area:string; neighborhood:string; lat:number; lng:number; categories:string[] };
 type View = "list" | "neighborhoods" | "map";
@@ -12,29 +13,47 @@ function escapeHtml(value:string) { return value.replace(/[&<>'"]/g, char => ({"
 
 function MapView({places}:{places:SavedPlace[]}) {
   const node = useRef<HTMLDivElement>(null);
-  const map = useRef<LeafletMap | null>(null);
+  const map = useRef<VectorMap | null>(null);
   useEffect(() => {
     let active = true;
-    import("leaflet").then((L) => {
+    import("maplibre-gl").then((L) => {
       if (!active || !node.current) return;
+      L.setWorkerUrl(mapWorkerUrl);
       map.current?.remove();
-      const instance=L.map(node.current,{zoomControl:true,attributionControl:true,preferCanvas:true});
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(instance);
-      const bounds=L.latLngBounds([]);
+      const instance=new L.Map({container:node.current,style:"https://tiles.openfreemap.org/styles/dark",center:[139.73,35.68],zoom:11,attributionControl:{compact:true},canvasContextAttributes:{preserveDrawingBuffer:true}});
+      instance.addControl(new L.NavigationControl({showCompass:false}),"top-right");
+      instance.on("error",event=>console.error("Map could not load:",event.error.message));
+      instance.scrollZoom.disable();
+      const bounds=new L.LngLatBounds();
       const groups=Object.entries(places.reduce<Record<string,SavedPlace[]>>((all,place)=>{(all[place.neighborhood]??=[]).push(place);return all},{}));
       groups.forEach(([name,items])=>{
         const center=neighborhoodCenters[name]??[items.reduce((sum,p)=>sum+p.lat,0)/items.length,items.reduce((sum,p)=>sum+p.lng,0)/items.length] as [number,number];
-        const marker=L.circleMarker(center,{radius:Math.min(20,6+Math.sqrt(items.length)),color:"#050505",weight:2,fillColor:"#f4f2ec",fillOpacity:.92});
+        const position:[number,number]=[center[1],center[0]];
+        const button=document.createElement("button");
+        button.className="neighborhood-marker";
+        button.textContent=String(items.length);
+        button.setAttribute("aria-label",`${name}: ${items.length} saved places`);
+        button.title=name;
         const samples=items.slice(0,5).map(place=>`<a href="${place.url}" target="_blank" rel="noreferrer">${escapeHtml(place.title)} ↗</a>`).join("");
-        marker.bindPopup(`<strong>${escapeHtml(name)}</strong><small>${items.length.toLocaleString()} SAVED PLACES</small><div class="map-samples">${samples}</div>`).addTo(instance);
-        bounds.extend(center);
+        new L.Marker({element:button}).setLngLat(position).setPopup(new L.Popup({offset:22,maxWidth:"280px"}).setHTML(`<strong>${escapeHtml(name)}</strong><small>${items.length.toLocaleString()} SAVED PLACES</small><div class="map-samples">${samples}</div>`)).addTo(instance);
+        bounds.extend(position);
       });
-      if(bounds.isValid()) instance.fitBounds(bounds,{padding:[24,24],maxZoom:13}); else instance.setView([36.2,138.25],5);
+      if(!bounds.isEmpty()) instance.fitBounds(bounds,{padding:60,maxZoom:13,duration:0}); else instance.jumpTo({center:[138.25,36.2],zoom:5});
+      if(groups.length>10 && places.every(place=>place.area==="Tokyo")) instance.jumpTo({center:[139.72,35.682],zoom:11.5});
+      instance.on("load",()=>{
+        for(const layer of instance.getStyle().layers){
+          if(layer.type==="background") instance.setPaintProperty(layer.id,"background-color","#171817");
+          if(layer.type==="symbol" && layer.layout?.["text-field"]){
+            instance.setPaintProperty(layer.id,"text-color","#c8c5bb");
+            instance.setPaintProperty(layer.id,"text-halo-color","#171817");
+          }
+        }
+      });
       map.current=instance;
     });
     return()=>{active=false;map.current?.remove();map.current=null};
   },[places]);
-  return <div><p className="map-note">NEIGHBORHOOD OVERVIEW · MARKER SIZE SHOWS SAVED-PLACE COUNT</p><div className="map-frame" ref={node} aria-label={`Map of neighborhoods containing ${places.length} saved places`} /></div>;
+  return <div><p className="map-note">EXPLORE NEIGHBORHOODS · SELECT A COUNT TO SEE PLACES</p><div className="map-frame" ref={node} aria-label={`Map of neighborhoods containing ${places.length} saved places`} /></div>;
 }
 
 export function PlacesExplorer({places}:{places:SavedPlace[]}) {
