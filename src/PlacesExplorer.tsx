@@ -20,7 +20,7 @@ function distance(a:Neighborhood,b:Neighborhood) {
   return 12742*Math.asin(Math.sqrt(Math.sin(dlat/2)**2+Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dlng/2)**2));
 }
 
-function MapView({places,selected,area,onSelect}:{places:SavedPlace[];selected:string;area:string;onSelect:(name:string)=>void}) {
+export function MapView({places,selected,area,onSelect}:{places:SavedPlace[];selected:string;area:string;onSelect:(name:string)=>void}) {
   const node=useRef<HTMLDivElement>(null);
   const [ready,setReady]=useState<{map:VectorMap;lib:typeof import("maplibre-gl")}|null>(null);
   const [failed,setFailed]=useState(false);
@@ -78,7 +78,7 @@ function MapView({places,selected,area,onSelect}:{places:SavedPlace[];selected:s
   </div>;
 }
 
-function Nearby({selected,places,onSelect}:{selected:string;places:SavedPlace[];onSelect:(name:string)=>void}) {
+export function Nearby({selected,places,onSelect}:{selected:string;places:SavedPlace[];onSelect:(name:string)=>void}) {
   const center=centers.get(selected);
   if(!center) return null;
   const counts=new Map(groupPlaces(places).map(([name,items])=>[name,items.length]));
