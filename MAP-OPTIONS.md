@@ -1,5 +1,7 @@
 # Map comparison
 
+The default comparison now shows three true dark monochrome variants: D Soft charcoal (tonal), E Graphite (high-contrast street detail), and F Black ink (no buildings, fewer labels). The earlier A–C set remains available through the collection switch. Only the active collection mounts maps, keeping three WebGL contexts rather than six. Neighborhood and camera position carry across collections. Each new style uses neutral grayscale paint values; the monochrome comparison shell also desaturates sprites and controls to prevent color leaks.
+
 `map-options.html` is a separate design comparison, not a replacement for the live guide's map. A preference is held only in browser memory; the chosen style should be applied to the guide only after Matt chooses in chat.
 
 - A: Paper atlas — adapted OpenFreeMap Positron; warm neutral land, subdued water, dark labels.
