@@ -78,13 +78,14 @@ export function MapView({places,selected,area,onSelect}:{places:SavedPlace[];sel
   </div>;
 }
 
-export function Nearby({selected,places,onSelect}:{selected:string;places:SavedPlace[];onSelect:(name:string)=>void}) {
+export function Nearby({selected,places,onSelect,compact=false}:{selected:string;places:SavedPlace[];onSelect:(name:string)=>void;compact?:boolean}) {
   const center=centers.get(selected);
   if(!center) return null;
   const counts=new Map(groupPlaces(places).map(([name,items])=>[name,items.length]));
   const nearby=neighborhoods.filter(n=>n.area===center.area&&n.name!==selected&&counts.has(n.name))
     .map(n=>({...n,km:distance(center,n)})).sort((a,b)=>a.km-b.km).slice(0,4);
   if(!nearby.length) return null;
+  if(compact) return <aside className="trial-nearby"><h2>Nearby</h2><p>Approximate distance between neighborhood centers</p><div>{nearby.map(n=><div className="trial-neighbor" key={n.name}><button onClick={()=>onSelect(n.name)}>{n.name}<span>{n.km.toFixed(1)} km</span></button><a href={`https://www.google.com/maps/dir/?api=1&origin=${center.lat},${center.lng}&destination=${n.lat},${n.lng}&travelmode=walking`} target="_blank" rel="noreferrer" aria-label={`Walking directions to ${n.name}`}>Directions</a></div>)}</div></aside>;
   return <aside className="nearby"><p className="kicker icon-label"><MaterialSymbol name="explore"/>WHERE NEXT?</p><h3>Nearby neighborhoods</h3>
     <p className="location-note">Distances are straight-line estimates between centers. Open directions for actual walking or train routes.</p>
     <div className="nearby-grid">{nearby.map(n=>{
