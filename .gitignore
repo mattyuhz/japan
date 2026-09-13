@@ -4,8 +4,6 @@
 /node_modules
 Google-Places.zip
 Google-Places*.zip
-Google-Places.zip
-Google-Places*.zip
 /.pnpm-store/
 /.pnp
 .pnp.*
@@ -43,3 +41,4 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+*.tsbuildinfo

@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import savedPlaces from "../src/data/japan-places.json";
+import { PlacesExplorer, type SavedPlace } from "../src/PlacesExplorer";
 
 const itinerary = [
   { date: "NOV 10", city: "SFO → NRT", stay: "IN FLIGHT", note: "JL057 · 11:45 departure", status: "CONFIRMED" },
@@ -15,22 +15,8 @@ const itinerary = [
 const stays = [
   ["01", "CAPTION KABUTOCHO", "NOV 11–13", "60K HYATT", "CONFIRMED"], ["02", "HYATT HOUSE SHIBUYA", "NOV 14–16", "63K HYATT", "CONFIRMED"], ["03", "HYATT PLACE KYOTO", "NOV 17–18", "19K HYATT", "CONFIRMED"], ["04", "RITZ-CARLTON OSAKA", "NOV 19", "$169 EFFECTIVE", "CONFIRMED"], ["05", "OSAKA / TBD", "NOV 20", "CASH", "OPEN"], ["06", "ANDAZ TOKYO", "NOV 21–22", "80K HYATT", "HOLD"],
 ];
-type SavedPlace = { title: string; url: string; area: string; categories: string[] };
-
 export default function Home() {
   const places = savedPlaces as SavedPlace[];
-  const [area, setArea] = useState("Tokyo");
-  const [category, setCategory] = useState("ALL");
-  const [query, setQuery] = useState("");
-  const categories = useMemo(() => [...new Set(places
-    .filter((place) => area === "ALL" || place.area === area)
-    .flatMap((place) => place.categories))].sort((a, b) => a.localeCompare(b)), [area, places]);
-  const matches = useMemo(() => places.filter((place) =>
-    (area === "ALL" || place.area === area) &&
-    (category === "ALL" || place.categories.includes(category)) &&
-    (!query || place.title.toLocaleLowerCase().includes(query.toLocaleLowerCase()))
-  ), [area, category, query, places]);
-  const setAreaFilter = (next: string) => { setArea(next); setCategory("ALL"); };
 
   return <main>
   <header className="masthead" id="top"><div><p className="eyebrow">FIELD PLAN · 2026</p><h1>JAPAN</h1></div><p className="edition">10—23 NOV<br/>MATT + WIFE<br/>V01 / SEP 02</p></header>
@@ -38,7 +24,7 @@ export default function Home() {
   <section className="intro"><p className="kicker">THE TRIP IN ONE LINE</p><h2>Tokyo 6 → Kyoto 2 → Osaka 2 → Tokyo 2 → home.</h2><div className="intro-grid"><p>A working field plan for a repeat Japan visit: local food, specialty coffee, design, outdoor gear, neighborhood wandering, and autumn color.</p><div className="numbers"><span><b>13</b>DAYS</span><span><b>12</b>NIGHTS</span><span><b>4</b>BASES</span></div></div></section>
   <section id="route"><div className="section-head"><p className="kicker">01 / ROUTE</p><p className="quiet">Few anchors. Nearby options. Room to wander.</p></div><div className="route-head"><span>DATE</span><span>PLACE / STAY</span><span>PLAN</span><span>STATUS</span></div><div className="route-list">{itinerary.map(day=><article className="route-row" key={day.date}><span className="date">{day.date}</span><div><h3>{day.city}</h3><p>{day.stay}</p></div><p>{day.note}</p><span className="status">{day.status}</span></article>)}</div></section>
   <section id="decisions"><div className="section-head"><p className="kicker">02 / NEXT DECISIONS</p><p className="quiet">Solve in this order.</p></div><div className="decision-grid"><article className="decision primary"><span>01 · HIGHEST PRIORITY</span><h2>Secure the return.</h2><p>Two JAL business awards from Tokyo to San Francisco on Monday, November 23. Verify bookability, airport, aircraft, fees, transfer timing, and cancellation rules before moving 140,000 Bilt points.</p><footer><span>TARGET</span><b>2 × 70K JAL</b></footer></article><article className="decision"><span>02 · OPEN</span><h2>Book November 20.</h2><p>Stay a second Osaka night at a moderate, refundable hotel. Favor a neighborhood that complements Umeda and keeps Saturday’s Shinkansen simple.</p><footer><span>DEFAULT</span><b>OSAKA / CASH</b></footer></article><article className="decision"><span>03 · HOLD</span><h2>Keep the Andaz—for now.</h2><p>It works when Monday’s return is secured and Sunday remains a full finale. Reassess only after the flight is solved.</p><footer><span>COST</span><b>80K HYATT</b></footer></article></div></section>
-  <section id="places" className="places"><div className="section-head"><p className="kicker">03 / SAVED PLACES</p><p className="quiet">Japan-only · personal notes excluded</p></div><div className="place-intro"><h2>Your Maps lists,<br/>cut down to Japan.</h2><p>{places.length.toLocaleString()} public venues gathered from your category lists. Search here, then open the original listing in Google Maps.</p></div><div className="place-controls"><div className="area-filters" aria-label="Filter places by area">{["Tokyo","Kamakura","Kyoto","Osaka","Elsewhere","ALL"].map(item=><button key={item} aria-pressed={area===item} onClick={()=>setAreaFilter(item)}>{item}</button>)}</div><div className="place-inputs"><label><span>SEARCH</span><input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Place name" /></label><label><span>CATEGORY</span><select value={category} onChange={event=>setCategory(event.target.value)}><option value="ALL">All categories</option>{categories.map(item=><option key={item} value={item}>{item}</option>)}</select></label></div></div><div className="place-result"><p>{matches.length.toLocaleString()} PLACES</p>{matches.length>80&&<p>SHOWING FIRST 80 · REFINE THE FILTERS</p>}</div><div className="place-list">{matches.slice(0,80).map(place=><a href={place.url} target="_blank" rel="noreferrer" className="place-row" key={`${place.url}-${place.title}`}><h3>{place.title}</h3><p>{place.categories.join(" · ")}</p><span>{place.area}</span><b aria-hidden="true">↗</b></a>)}</div>{matches.length===0&&<p className="place-empty">No matches. Try another area or category.</p>}</section>
+  <PlacesExplorer places={places}/>
   <section id="stays"><div className="section-head"><p className="kicker">04 / STAYS</p><p className="quiet">142K Hyatt without Andaz · 222K with it</p></div><div className="stay-list">{stays.map(([n,name,dates,cost,status])=><div className="stay-row" key={n}><span>{n}</span><h3>{name}</h3><span>{dates}</span><span>{cost}</span><span className="status">{status}</span></div>)}</div></section>
   <section id="kamakura" className="kamakura"><div className="section-head"><p className="kicker">05 / KAMAKURA FIELD DAY</p><p className="quiet">Friday · November 13</p></div><div className="kamakura-title"><h2>Gear, food, and place.<br/>Not a retail errand.</h2><p>Tokyo → Kita-Kamakura → Kamakura / Yuigahama → Tokyo</p></div><ol className="anchors"><li><span>01</span><div><h3>T2 EXPERIENCE STORE</h3><p>Verify access, hours, and appointment requirements.</p></div></li><li><span>02</span><div><h3>YAMATOMICHI KAMAKURA</h3><p>Primary shop visit. Recheck the November Store Program.</p></div></li><li><span>03</span><div><h3>LOCAL MEAL</h3><p>Resident-loved and specific to Kamakura—not a tourist-review default.</p></div></li><li><span>04</span><div><h3>ONE REAL PLACE</h3><p>A meaningful stop or the Yuigahama coast, with time left unscheduled.</p></div></li></ol></section>
   <section id="principles"><div className="section-head"><p className="kicker">06 / OPERATING PRINCIPLES</p><p className="quiet">What makes the trip good.</p></div><div className="principle-grid"><p><span>01</span>Distinctive local food over nightlife.</p><p><span>02</span>Organize by neighborhood, not citywide lists.</p><p><span>03</span>Start early for Kyoto autumn color.</p><p><span>04</span>Premium return comfort is non-negotiable.</p><p><span>05</span>Verify live conditions before transferring points.</p><p><span>06</span>A strong trip beats more destinations.</p></div></section>
