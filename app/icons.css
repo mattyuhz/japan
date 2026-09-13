@@ -1,0 +1,17 @@
+/* Exact filled font, size and weight used in the Zurich guide; served locally. */
+@font-face{font-family:"Material Symbols Outlined";font-style:normal;font-weight:400;font-display:block;src:url("/fonts/material-symbols-filled.woff2") format("woff2")}
+.material-symbol{display:inline-block;width:1em;flex:0 0 auto;overflow:hidden;color:currentColor;font-family:"Material Symbols Outlined";font-size:18px;font-style:normal;font-weight:400;font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 20;letter-spacing:normal;line-height:1;text-align:center;text-transform:none;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";-webkit-font-smoothing:antialiased}
+.icon-label,.action-link{display:inline-flex;align-items:center;gap:6px}
+.icon-label>.material-symbol,.action-link>.material-symbol{font-size:16px}
+nav .material-symbol{color:var(--muted);font-size:16px}
+.view-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px}
+.view-tabs .material-symbol{font-size:18px}
+.place-inputs label>.icon-label{display:flex;align-items:center}
+.place-row h3{display:flex;align-items:center;gap:10px;min-width:0}
+.place-row h3>.material-symbol{font-family:"Material Symbols Outlined";font-size:18px;line-height:1;color:var(--muted);width:1em;flex-shrink:0}
+.place-row h3>.place-title-text{font:inherit;color:inherit;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.place-row>.material-symbol{font-family:"Material Symbols Outlined";font-size:16px;color:var(--muted)}
+.neighborhood-group h3{display:flex;align-items:center;gap:10px}
+.neighborhood-group h3>.material-symbol{font-size:20px;color:var(--muted)}
+.nearby-card>div .action-link{min-height:44px}
+@media(max-width:700px){.place-row h3>.place-title-text{grid-column:auto;grid-row:auto;white-space:normal}.place-row>.material-symbol{grid-column:3;grid-row:1}.place-row h3>.material-symbol{grid-column:auto;grid-row:auto}}

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Map as VectorMap } from "maplibre-gl";
 import mapWorkerUrl from "maplibre-gl/dist/maplibre-gl-csp-worker.js?url";
 import neighborhoods from "./data/neighborhoods.json";
+import MaterialSymbol from "./MaterialSymbol";
+import { categoryIcon } from "./categoryIcon";
 
 export type SavedPlace = { title:string; url:string; area:string; neighborhood:string; lat:number; lng:number; categories:string[] };
 type View = "list" | "neighborhoods" | "map";
@@ -92,13 +94,13 @@ function Nearby({selected,places,onSelect}:{selected:string;places:SavedPlace[];
   const nearby=neighborhoods.filter(n=>n.area===center.area&&n.name!==selected&&counts.has(n.name))
     .map(n=>({...n,km:distance(center,n)})).sort((a,b)=>a.km-b.km).slice(0,4);
   if(!nearby.length) return null;
-  return <aside className="nearby"><p className="kicker">WHERE NEXT?</p><h3>Nearby neighborhoods</h3>
+  return <aside className="nearby"><p className="kicker icon-label"><MaterialSymbol name="explore"/>WHERE NEXT?</p><h3>Nearby neighborhoods</h3>
     <p className="location-note">Distances are straight-line estimates between centers. Open directions for actual walking or train routes.</p>
     <div className="nearby-grid">{nearby.map(n=>{
       const route=`https://www.google.com/maps/dir/?api=1&origin=${center.lat},${center.lng}&destination=${n.lat},${n.lng}`;
       return <div className="nearby-card" key={n.name}><button onClick={()=>onSelect(n.name)}>{n.name} <span>↗</span></button>
         <p>{n.km.toFixed(1)} km · {counts.get(n.name)} saved places</p>
-        <div><a href={route+"&travelmode=walking"} target="_blank" rel="noreferrer">Walk ↗</a><a href={route+"&travelmode=transit"} target="_blank" rel="noreferrer">Transit ↗</a></div>
+        <div><a className="action-link" href={route+"&travelmode=walking"} target="_blank" rel="noreferrer"><MaterialSymbol name="directions_walk"/>Walk<MaterialSymbol name="open_in_new"/></a><a className="action-link" href={route+"&travelmode=transit"} target="_blank" rel="noreferrer"><MaterialSymbol name="train"/>Transit<MaterialSymbol name="open_in_new"/></a></div>
       </div>;
     })}</div>
   </aside>;
@@ -120,27 +122,27 @@ export function PlacesExplorer({places}:{places:SavedPlace[]}) {
   const explore=(name:string)=>{setSelected(name);setView("map")};
   const setAreaFilter=(next:string)=>{setArea(next);setCategory("ALL");setSelected("ALL")};
   return <section id="places" className="places">
-    <div className="section-head"><p className="kicker">03 / SAVED PLACES</p><p className="quiet">Japan-only · personal notes excluded</p></div>
+    <div className="section-head"><p className="kicker icon-label"><MaterialSymbol name="map"/>03 / SAVED PLACES</p><p className="quiet">Japan-only · personal notes excluded</p></div>
     <div className="place-intro"><h2>Your Maps lists,<br/>now by neighborhood.</h2><p>Start in Jimbocho, spend an afternoon in Ginza, or explore Kanda. Narrow your saved places to one neighborhood, then find your next stop nearby.</p></div>
-    <div className="view-tabs" role="tablist" aria-label="Saved places view">{(["list","neighborhoods","map"] as View[]).map(item=><button role="tab" aria-selected={view===item} key={item} onClick={()=>setView(item)}>{item}</button>)}</div>
+    <div className="view-tabs" role="tablist" aria-label="Saved places view">{(["list","neighborhoods","map"] as View[]).map(item=><button role="tab" aria-selected={view===item} key={item} onClick={()=>setView(item)}><MaterialSymbol name={item==="list"?"menu_book":item==="map"?"map":"location_on"}/>{item}</button>)}</div>
     <div className="place-controls"><div className="area-filters" aria-label="Filter places by area">{["Tokyo","Kamakura","Kyoto","Osaka","Elsewhere","ALL"].map(item=><button key={item} aria-pressed={area===item} onClick={()=>setAreaFilter(item)}>{item}</button>)}</div>
       <div className="place-inputs">
-        <label><span>NEIGHBORHOOD</span><select value={selected} onChange={e=>setSelected(e.target.value)}><option value="ALL">All neighborhoods</option>{options.map(([name,items])=><option key={name} value={name}>{name} ({items.length})</option>)}</select></label>
-        <label><span>SEARCH</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Place or neighborhood" /></label>
-        <label><span>CATEGORY</span><select value={category} onChange={e=>setCategory(e.target.value)}><option value="ALL">All categories</option>{categories.map(item=><option key={item} value={item}>{item}</option>)}</select></label>
+        <label><span className="icon-label"><MaterialSymbol name="location_on"/>NEIGHBORHOOD</span><select value={selected} onChange={e=>setSelected(e.target.value)}><option value="ALL">All neighborhoods</option>{options.map(([name,items])=><option key={name} value={name}>{name} ({items.length})</option>)}</select></label>
+        <label><span className="icon-label"><MaterialSymbol name="filter_alt"/>SEARCH</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Place or neighborhood" /></label>
+        <label><span className="icon-label"><MaterialSymbol name={category==="ALL"?"tune":categoryIcon([category])}/>CATEGORY</span><select value={category} onChange={e=>setCategory(e.target.value)}><option value="ALL">All categories</option>{categories.map(item=><option key={item} value={item}>{item}</option>)}</select></label>
       </div>
     </div>
     <div className="place-result"><p>{visible.length.toLocaleString()} PLACES · {selected==="ALL" ? `${groups.filter(([name])=>name!==UNKNOWN).length} NAMED NEIGHBORHOODS` : selected.toUpperCase()}</p>{selected!=="ALL"&&<button className="text-button" onClick={()=>setSelected("ALL")}>← All neighborhoods</button>}</div>
     {selected==="ALL"&&unknownCount>0&&<p className="location-note">{unknownCount.toLocaleString()} listings need more location detail. <button className="text-button" onClick={()=>setSelected(UNKNOWN)}>Browse neighborhoods to confirm →</button></p>}
     {view==="list"&&<PlaceList key={area+selected+category+query} places={visible}/>}
     {view==="neighborhoods"&&<div className="neighborhood-list">{groups.map(([name,items])=><section className="neighborhood-group" key={name}>
-      <header><h3>{name}</h3><span>{items.length} places</span>{name!==UNKNOWN&&<button className="text-button" onClick={()=>explore(name)}>Explore on map ↗</button>}</header>
+      <header><h3><MaterialSymbol name={name===UNKNOWN?"info":"location_on"}/>{name}</h3><span>{items.length} places</span>{name!==UNKNOWN&&<button className="text-button" onClick={()=>explore(name)}>Explore on map ↗</button>}</header>
       <PlaceList places={items} initial={6}/>
     </section>)}</div>}
     {view==="map"&&<>
       <div ref={mapRegion} className="map-region"><MapView places={matches} selected={selected} area={area} onSelect={onSelect}/></div>
       {selected==="ALL" ? <div className="neighborhood-picker">{groupPlaces(matches).map(([name,items])=><button key={name} onClick={()=>setSelected(name)}>{name}<span>{items.length}</span></button>)}</div>
-      : <section className="map-selection"><header><p className="kicker">EXPLORE ON FOOT</p><h3>{selected}</h3><p>{visible.length} saved places matching your filters</p></header>
+      : <section className="map-selection"><header><p className="kicker icon-label"><MaterialSymbol name="directions_walk"/>EXPLORE ON FOOT</p><h3>{selected}</h3><p>{visible.length} saved places matching your filters</p></header>
         {selected===UNKNOWN&&<p className="location-note">These listings are not mapped because the export does not provide a reliable neighborhood. Open each venue in Google Maps to check its location.</p>}
         <PlaceList key={area+selected+category+query} places={visible}/>
         <Nearby selected={selected} places={matches} onSelect={onSelect}/>
@@ -153,6 +155,6 @@ export function PlacesExplorer({places}:{places:SavedPlace[]}) {
 function PlaceList({places,initial=40}:{places:SavedPlace[];initial?:number}) {
   const [limit,setLimit]=useState(initial);
   return <div className="place-list">{places.slice(0,limit).map(place=><a href={place.url} target="_blank" rel="noreferrer" className="place-row" key={place.url+"-"+place.title}>
-    <h3>{place.title}</h3><p>{place.categories.join(" · ")}</p><span>{place.neighborhood}</span><b aria-hidden="true">↗</b>
+    <h3><MaterialSymbol name={categoryIcon(place.categories)}/><span className="place-title-text">{place.title}</span></h3><p>{place.categories.join(" · ")}</p><span>{place.neighborhood}</span><MaterialSymbol name="open_in_new"/>
   </a>)}{places.length>limit&&<button className="show-more" onClick={()=>setLimit(limit+40)}>Show more · {places.length-limit} remaining ↓</button>}</div>;
 }
