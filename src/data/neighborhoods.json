@@ -1,0 +1,669 @@
+[
+  {
+    "area": "Tokyo",
+    "name": "Jimbocho",
+    "lat": 35.6959,
+    "lng": 139.7576,
+    "aliases": [
+      "jinbocho",
+      "神保町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kanda",
+    "lat": 35.6917,
+    "lng": 139.7708,
+    "aliases": [
+      "神田"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ginza",
+    "lat": 35.6717,
+    "lng": 139.765,
+    "aliases": [
+      "銀座"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Marunouchi",
+    "lat": 35.681,
+    "lng": 139.7639,
+    "aliases": [
+      "丸の内",
+      "tokyo station"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Nihonbashi",
+    "lat": 35.684,
+    "lng": 139.7745,
+    "aliases": [
+      "日本橋"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kabutocho",
+    "lat": 35.6817,
+    "lng": 139.7785,
+    "aliases": [
+      "兜町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kayabacho",
+    "lat": 35.6799,
+    "lng": 139.7805,
+    "aliases": [
+      "茅場町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ningyocho",
+    "lat": 35.6863,
+    "lng": 139.7823,
+    "aliases": [
+      "人形町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kiyosumi-Shirakawa",
+    "lat": 35.6822,
+    "lng": 139.7993,
+    "aliases": [
+      "kiyosumi shirakawa",
+      "清澄白河"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Monzen-Nakacho",
+    "lat": 35.6718,
+    "lng": 139.7962,
+    "aliases": [
+      "monzen nakacho",
+      "門前仲町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Shibuya",
+    "lat": 35.6595,
+    "lng": 139.7005,
+    "aliases": [
+      "渋谷"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Harajuku",
+    "lat": 35.6702,
+    "lng": 139.7027,
+    "aliases": [
+      "原宿"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Omotesando",
+    "lat": 35.6653,
+    "lng": 139.7123,
+    "aliases": [
+      "表参道"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Aoyama",
+    "lat": 35.6713,
+    "lng": 139.7197,
+    "aliases": [
+      "青山"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Sendagaya",
+    "lat": 35.6801,
+    "lng": 139.7115,
+    "aliases": [
+      "千駄ヶ谷"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Yoyogi",
+    "lat": 35.6831,
+    "lng": 139.702,
+    "aliases": [
+      "代々木"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ebisu",
+    "lat": 35.6467,
+    "lng": 139.7101,
+    "aliases": [
+      "恵比寿"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Daikanyama",
+    "lat": 35.6481,
+    "lng": 139.7032,
+    "aliases": [
+      "代官山"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Nakameguro",
+    "lat": 35.6443,
+    "lng": 139.6991,
+    "aliases": [
+      "naka-meguro",
+      "中目黒"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Meguro",
+    "lat": 35.6339,
+    "lng": 139.7158,
+    "aliases": [
+      "目黒"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Shinjuku",
+    "lat": 35.6909,
+    "lng": 139.7003,
+    "aliases": [
+      "新宿"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kabukicho",
+    "lat": 35.6952,
+    "lng": 139.7038,
+    "aliases": [
+      "歌舞伎町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Shin-Okubo",
+    "lat": 35.7013,
+    "lng": 139.7001,
+    "aliases": [
+      "shin okubo",
+      "新大久保"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kagurazaka",
+    "lat": 35.7038,
+    "lng": 139.7352,
+    "aliases": [
+      "神楽坂"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Yotsuya",
+    "lat": 35.686,
+    "lng": 139.7306,
+    "aliases": [
+      "四谷",
+      "四ツ谷"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Shimokitazawa",
+    "lat": 35.6616,
+    "lng": 139.668,
+    "aliases": [
+      "shimo-kitazawa",
+      "下北沢"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Sangenjaya",
+    "lat": 35.6436,
+    "lng": 139.6709,
+    "aliases": [
+      "三軒茶屋"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Jiyugaoka",
+    "lat": 35.6073,
+    "lng": 139.6687,
+    "aliases": [
+      "自由が丘"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Futakotamagawa",
+    "lat": 35.611,
+    "lng": 139.626,
+    "aliases": [
+      "futako-tamagawa",
+      "二子玉川"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Koenji",
+    "lat": 35.7053,
+    "lng": 139.6496,
+    "aliases": [
+      "高円寺"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Nakano",
+    "lat": 35.7058,
+    "lng": 139.6657,
+    "aliases": [
+      "中野"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ogikubo",
+    "lat": 35.7045,
+    "lng": 139.6197,
+    "aliases": [
+      "荻窪"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kichijoji",
+    "lat": 35.7033,
+    "lng": 139.5797,
+    "aliases": [
+      "吉祥寺"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Akihabara",
+    "lat": 35.6984,
+    "lng": 139.7731,
+    "aliases": [
+      "秋葉原"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ochanomizu",
+    "lat": 35.6995,
+    "lng": 139.765,
+    "aliases": [
+      "御茶ノ水",
+      "お茶の水"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ueno",
+    "lat": 35.7138,
+    "lng": 139.777,
+    "aliases": [
+      "上野"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Yanaka",
+    "lat": 35.7276,
+    "lng": 139.7652,
+    "aliases": [
+      "yanaka ginza",
+      "谷中銀座",
+      "谷中"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Nippori",
+    "lat": 35.7278,
+    "lng": 139.7709,
+    "aliases": [
+      "日暮里"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Asakusa",
+    "lat": 35.7118,
+    "lng": 139.7967,
+    "aliases": [
+      "浅草"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kuramae",
+    "lat": 35.7035,
+    "lng": 139.7909,
+    "aliases": [
+      "蔵前"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Asakusabashi",
+    "lat": 35.6974,
+    "lng": 139.7859,
+    "aliases": [
+      "浅草橋"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ryogoku",
+    "lat": 35.6969,
+    "lng": 139.7933,
+    "aliases": [
+      "両国"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Oshiage",
+    "lat": 35.7104,
+    "lng": 139.813,
+    "aliases": [
+      "skytree",
+      "押上"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Ikebukuro",
+    "lat": 35.7295,
+    "lng": 139.7109,
+    "aliases": [
+      "池袋"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Roppongi",
+    "lat": 35.6628,
+    "lng": 139.7315,
+    "aliases": [
+      "六本木"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Akasaka",
+    "lat": 35.6721,
+    "lng": 139.7365,
+    "aliases": [
+      "赤坂"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Azabu-Juban",
+    "lat": 35.6552,
+    "lng": 139.737,
+    "aliases": [
+      "azabu juban",
+      "azabujuban",
+      "麻布十番"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Toranomon",
+    "lat": 35.6702,
+    "lng": 139.7498,
+    "aliases": [
+      "虎ノ門"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Shimbashi",
+    "lat": 35.6663,
+    "lng": 139.7585,
+    "aliases": [
+      "shinbashi",
+      "新橋"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Yurakucho",
+    "lat": 35.675,
+    "lng": 139.7633,
+    "aliases": [
+      "有楽町"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Hibiya",
+    "lat": 35.6743,
+    "lng": 139.7598,
+    "aliases": [
+      "日比谷"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Tsukiji",
+    "lat": 35.6655,
+    "lng": 139.7707,
+    "aliases": [
+      "築地"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Kachidoki",
+    "lat": 35.6589,
+    "lng": 139.7772,
+    "aliases": [
+      "勝どき"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Toyosu",
+    "lat": 35.6549,
+    "lng": 139.7965,
+    "aliases": [
+      "豊洲"
+    ]
+  },
+  {
+    "area": "Tokyo",
+    "name": "Odaiba",
+    "lat": 35.6267,
+    "lng": 139.7753,
+    "aliases": [
+      "お台場"
+    ]
+  },
+  {
+    "area": "Kamakura",
+    "name": "Kita-Kamakura",
+    "lat": 35.3373,
+    "lng": 139.5441,
+    "aliases": [
+      "kita kamakura",
+      "北鎌倉"
+    ]
+  },
+  {
+    "area": "Kamakura",
+    "name": "Yuigahama",
+    "lat": 35.3104,
+    "lng": 139.541,
+    "aliases": [
+      "由比ヶ浜"
+    ]
+  },
+  {
+    "area": "Kamakura",
+    "name": "Hase",
+    "lat": 35.3113,
+    "lng": 139.5369,
+    "aliases": [
+      "長谷"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Gion",
+    "lat": 35.0037,
+    "lng": 135.7786,
+    "aliases": [
+      "祇園"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Higashiyama",
+    "lat": 35.0093,
+    "lng": 135.7807,
+    "aliases": [
+      "東山"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Arashiyama",
+    "lat": 35.0094,
+    "lng": 135.6668,
+    "aliases": [
+      "嵐山"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Fushimi",
+    "lat": 34.9355,
+    "lng": 135.7616,
+    "aliases": [
+      "伏見"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Kawaramachi",
+    "lat": 35.0038,
+    "lng": 135.7685,
+    "aliases": [
+      "河原町"
+    ]
+  },
+  {
+    "area": "Kyoto",
+    "name": "Karasuma",
+    "lat": 35.0037,
+    "lng": 135.759,
+    "aliases": [
+      "烏丸"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Umeda",
+    "lat": 34.7025,
+    "lng": 135.4959,
+    "aliases": [
+      "梅田"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Kitashinchi",
+    "lat": 34.698,
+    "lng": 135.4978,
+    "aliases": [
+      "北新地"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Namba",
+    "lat": 34.665,
+    "lng": 135.501,
+    "aliases": [
+      "nanba",
+      "難波",
+      "なんば"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Shinsaibashi",
+    "lat": 34.675,
+    "lng": 135.5007,
+    "aliases": [
+      "心斎橋"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Nakazakicho",
+    "lat": 34.7067,
+    "lng": 135.5059,
+    "aliases": [
+      "中崎町"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Tenma",
+    "lat": 34.7048,
+    "lng": 135.5121,
+    "aliases": [
+      "天満"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Fukushima",
+    "lat": 34.6971,
+    "lng": 135.4865,
+    "aliases": [
+      "福島"
+    ]
+  },
+  {
+    "area": "Osaka",
+    "name": "Tennoji",
+    "lat": 34.6467,
+    "lng": 135.5133,
+    "aliases": [
+      "天王寺"
+    ]
+  }
+]
